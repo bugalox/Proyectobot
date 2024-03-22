@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Solicitud de Cambio de Información Personal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #0047ab;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        h1 {
+            color: #e30022;
+            text-align: center;
+            margin-top: 20px;
+        }
+        form {
+            background-color: white;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 400px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        input[type="text"],
+        input[type="email"],
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #0047ab;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #00274c;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Solicitud de Cambio de Información Personal</h1>
+    </header>
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="employee_id" value="{{ user.id }}">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" value="{{ user.nombre }}"><br><br>
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" value="{{ user.apellido }}"><br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ user.email }}"><br><br>
+        <label for="departamento">Departamento:</label>
+        <input type="text" id="departamento" name="departamento" value="{{ user.departamento }}"><br><br>
+        <label for="puesto">Puesto:</label>
+        <input type="text" id="puesto" name="puesto" value="{{ user.puesto }}"><br><br>
+        <label for="new_name">Nuevo nombre:</label>
+        <input type="text" id="new_name" name="new_name" placeholder="Nuevo nombre"><br><br>
+        <label for="new_address">Nueva dirección:</label>
+        <input type="text" id="new_address" name="new_address" placeholder="Nueva dirección"><br><br>
+        <button type="submit">Enviar solicitud</button>
+    </form>
+</body>
+</html>
+

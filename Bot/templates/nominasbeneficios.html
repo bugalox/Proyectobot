@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información de Nóminas y Beneficios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #0047ab;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        h1 {
+            color: red; /* Cambio de color a rojo */
+            text-align: center;
+            margin-top: 20px;
+        }
+        p {
+            margin: 20px;
+        }
+        ul {
+            list-style-type: none;
+            margin: 20px;
+            padding: 0;
+        }
+        li {
+            background-color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-left: 5px solid #0047ab;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section-title {
+            background-color: #0047ab;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        footer {
+            background-color: #0047ab;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        form {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 400px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label, input {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            background-color: #0047ab;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Información de Nóminas y Beneficios</h1>
+    </header>
+    <div class="section">
+        <h2 class="section-title">Nóminas</h2>
+        <form action="/vacaciones/" method="post">
+            {% csrf_token %}
+            <label for="employee_id">Número de Empleado:</label>
+            <input type="text" id="employee_id" name="employee_id" required>
+            <label for="start_date">Fecha de Inicio:</label>
+            <input type="date" id="start_date" name="start_date" required>
+            <label for="end_date">Fecha de Fin:</label>
+            <input type="date" id="end_date" name="end_date" required>
+            <input type="submit" value="Solicitar Nómina">
+        </form>
+    </div>
+    <div class="section">
+        <h2 class="section-title">Beneficios</h2>
+        <ul>
+            <li><strong>Seguro de Salud:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+            <li><strong>Plan de Pensiones:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+            <li><strong>Beneficio Adicional:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+        </ul>
+    </div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Nombre de la Empresa. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

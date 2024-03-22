@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inicio - Bot de Recursos Humanos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin: 0 5px;
+        }
+
+        .container {
+            margin: 20px auto;
+            width: 80%;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #bot-response {
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            padding: 20px;
+            width: 80%;
+            margin: 0 auto;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bienvenido al Bot de Recursos Humanos</h1>
+    </header>
+    <nav>
+        <a href="{% url 'company_info' %}">Información General</a>
+        <a href="{% url 'faq' %}">Preguntas Frecuentes</a>
+        <a href="{% url 'nominasbeneficios' %}">Nóminas y Beneficios</a>
+        <a href="{% url 'personal' %}">Información Personal</a>
+        <a href="{% url 'politicas' %}">Políticas Internas</a>
+        <a href="{% url 'vacaciones' %}">Vacaciones y Permisos</a>
+    </nav>
+    <div class="container">
+        <h2>Interactúa con nuestro Bot</h2>
+        <form action="{% url 'bot_view' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="question" placeholder="Escribe tu pregunta aquí">
+            <button type="submit">Enviar</button>
+        </form>
+        <div id="bot-response"></div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Bot de Recursos Humanos</p>
+    </footer>
+
+    <script>
+        const form = document.querySelector('.container form');
+        const botResponseDiv = document.getElementById('bot-response');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                botResponseDiv.textContent = data.response;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
+
