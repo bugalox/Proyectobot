@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Información General sobre la Empresa</title>
+    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,13 +14,13 @@
             padding: 0;
         }
         header {
-            background-color: #0047ab;
+            background-color: #333;
             color: white;
             padding: 10px;
             text-align: center;
         }
         h1 {
-            color: red; /* Cambio de color a rojo */
+            color: white; /* Cambio de color a rojo */
             text-align: center;
             margin-top: 20px;
         }
@@ -41,13 +42,44 @@
             border-left: 5px solid #0047ab;
         }
         footer {
-            background-color: #0047ab;
+            background-color: #333;
             color: white;
             text-align: center;
-            padding: 10px;
+            padding: 10px 0;
             position: fixed;
             bottom: 0;
+            left: 0;
             width: 100%;
+        }
+        nav {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin: 0 5px;
+        }
+
+        .container {
+            margin: 20px auto;
+            width: 80%;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
         }
     </style>
 </head>
@@ -55,6 +87,15 @@
     <header>
         <h1>Información General sobre la Empresa</h1>
     </header>
+    <nav>
+        <a href="{% url 'home' %}">Inicio</a>
+        <a href="{% url 'company_info' %}">Información General</a>
+        <a href="{% url 'faq' %}">Preguntas Frecuentes</a>
+        <a href="{% url 'nominasbeneficios' %}">Nóminas y Beneficios</a>
+        <a href="{% url 'personal' %}">Información Personal</a>
+        <a href="{% url 'politicas' %}">Políticas Internas</a>
+        <a href="{% url 'vacaciones' %}">Vacaciones y Permisos</a>
+    </nav>
     <p>Bienvenido a nuestra empresa. Aquí encontrarás información relevante sobre nuestra historia, misión, visión y valores.</p>
     <h2>Historia</h2>
     <p>Nuestra empresa fue fundada en 1990 con el objetivo de ofrecer soluciones innovadoras en el sector tecnológico. A lo largo de los años, hemos evolucionado y expandido nuestras operaciones a nivel global, convirtiéndonos en líderes en nuestro campo. Desde nuestros humildes comienzos como una pequeña startup, hemos crecido hasta convertirnos en una corporación multinacional con presencia en más de 50 países y un equipo diverso de más de 10,000 empleados. Nuestro viaje ha estado marcado por el compromiso constante con la calidad, la innovación y la satisfacción del cliente, lo que nos ha permitido superar desafíos y alcanzar nuevos horizontes en el mundo de la tecnología.</p>

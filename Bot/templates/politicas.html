@@ -13,13 +13,13 @@
             padding: 0;
         }
         header {
-            background-color: #0047ab;
+            background-color: #333;
             color: white;
             padding: 10px;
             text-align: center;
         }
         h1 {
-            color: #e30022;
+            color: white;
             text-align: center;
             margin-top: 20px;
         }
@@ -38,12 +38,61 @@
             border-radius: 5px;
             border: 1px solid #ddd;
         }
+        nav {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin: 0 5px;
+        }
+
+        .container {
+            margin: 20px auto;
+            width: 80%;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Políticas Internas de la Empresa</h1>
     </header>
+    <nav>
+        <a href="{% url 'home' %}">Inicio</a>
+        <a href="{% url 'company_info' %}">Información General</a>
+        <a href="{% url 'faq' %}">Preguntas Frecuentes</a>
+        <a href="{% url 'nominasbeneficios' %}">Nóminas y Beneficios</a>
+        <a href="{% url 'personal' %}">Información Personal</a>
+        <a href="{% url 'politicas' %}">Políticas Internas</a>
+        <a href="{% url 'vacaciones' %}">Vacaciones y Permisos</a>
+    </nav>
     <section>
         <h2>Política de Recursos Humanos</h2>
         <p>Nuestra política de recursos humanos se centra en promover un ambiente de trabajo inclusivo y respetuoso, donde todos los empleados se sientan valorados y motivados. Nos comprometemos a proporcionar igualdad de oportunidades de empleo y desarrollo profesional, sin discriminación por género, edad, origen étnico o cualquier otra condición. La capacitación continua, la evaluación justa del desempeño y el reconocimiento de los logros son pilares fundamentales de nuestra gestión de talento humano. Asimismo, fomentamos el equilibrio entre la vida laboral y personal, ofreciendo flexibilidad y apoyo en situaciones de necesidad.</p>

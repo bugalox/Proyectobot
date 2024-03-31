@@ -78,5 +78,7 @@ def bot_view(request):
     if request.method == 'POST':
         question = request.POST.get('question', '')
         response = process_request(question)
-        return JsonResponse({'response': response})
+        return JsonResponse({'response': response['answer'], 'redirect_url': response['redirect_url']})
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+

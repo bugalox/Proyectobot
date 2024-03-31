@@ -10,13 +10,13 @@
             padding: 0;
         }
         header {
-            background-color: #0047ab;
+            background-color: #333;
             color: white;
             padding: 10px;
             text-align: center;
         }
         h1 {
-            color: #e30022;
+            color: white;
             text-align: center;
             margin-top: 20px;
         }
@@ -47,12 +47,51 @@
         button:hover {
             background-color: #00274c;
         }
+        nav {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin: 0 5px;
+        }
+
+        .container {
+            margin: 20px auto;
+            width: 80%;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Solicitud de Cambio de Información Personal</h1>
     </header>
+    <nav>
+        <a href="{% url 'home' %}">Inicio</a>
+        <a href="{% url 'company_info' %}">Información General</a>
+        <a href="{% url 'faq' %}">Preguntas Frecuentes</a>
+        <a href="{% url 'nominasbeneficios' %}">Nóminas y Beneficios</a>
+        <a href="{% url 'personal' %}">Información Personal</a>
+        <a href="{% url 'politicas' %}">Políticas Internas</a>
+        <a href="{% url 'vacaciones' %}">Vacaciones y Permisos</a>
+    </nav>
     <form method="post">
         {% csrf_token %}
         <input type="hidden" name="employee_id" value="{{ user.id }}">
