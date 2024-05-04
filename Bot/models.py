@@ -2,11 +2,13 @@ from django.db import models
 import datetime 
 
 class Employee(models.Model):
+    employee_id = models.CharField(max_length=100, default='')
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100, default='Doe')
     email = models.EmailField()
     departamento = models.CharField(max_length=100, default='Doe')
     puesto = models.CharField(max_length=100, default='Doe')
+    dias_de_vacaciones_disponibles = models.IntegerField(default=0)
     # Agrega más campos según necesites
     # Otros campos como dirección, teléfono, etc.
 
@@ -17,6 +19,7 @@ class Employee(models.Model):
 
 class Vacaciones(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    dias_de_vacaciones = models.CharField(max_length=100, default='')
     fecha_inicio = models.DateField(default=datetime.date.today)
     fecha_fin = models.DateField(default=datetime.date.today)
     motivo = models.TextField()

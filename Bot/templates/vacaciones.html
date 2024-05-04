@@ -107,16 +107,25 @@
         <a href="{% url 'politicas' %}">Políticas Internas</a>
         <a href="{% url 'vacaciones' %}">Vacaciones y Permisos</a>
     </nav>
-    <form method="post">
-        {% csrf_token %}
-        <label for="employee_id">ID de Empleado:</label>
-        <input type="text" id="employee_id" name="employee_id"><br><br>
-        <label for="start_date">Fecha de Inicio:</label>
-        <input type="date" id="start_date" name="start_date"><br><br>
-        <label for="end_date">Fecha de Fin:</label>
-        <input type="date" id="end_date" name="end_date"><br><br>
-        <button type="submit">Enviar Solicitud</button>
-    </form>
+    <div class="container">
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <label for="employee_id">ID de Empleado:</label>
+            <input type="text" id="employee_id" name="employee_id"><br><br>
+            <label for="start_date">Fecha de Inicio:</label>
+            <input type="date" id="start_date" name="start_date"><br><br>
+            <label for="end_date">Fecha de Fin:</label>
+            <input type="date" id="end_date" name="end_date"><br><br>
+            <button type="submit">Enviar Solicitud</button>
+        </form>
+    </div>
 </body>
 </html>
 

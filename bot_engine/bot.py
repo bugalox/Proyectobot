@@ -2,7 +2,7 @@
 import openai
 from django.shortcuts import redirect
 
-openai.api_key = "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"
+openai.api_key = "sk-"
 
 def process_request(question):
     response = openai.ChatCompletion.create(
