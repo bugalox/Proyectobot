@@ -42,9 +42,19 @@ class Policy(models.Model):
 
 class Nomina(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    salario = models.DecimalField(max_digits=10, decimal_places=2)
-    fecha_pago = models.DateField()
-    # Agrega más campos relacionados con la nómina
+    start_date = models.DateField(default=datetime.date.today)
+    end_date = models.DateField(default=datetime.date.today)
+    salario = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    fecha_pago =  fecha_pago = models.DateField(null=True)
+    salario_base = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    bonificaciones = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    deducciones = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    horas_extra = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    otros_ingresos = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    salud = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    pension = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    otros_descuentos = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    salario_neto = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
 class Beneficio(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
@@ -53,3 +63,4 @@ class Beneficio(models.Model):
     # Agrega más campos relacionados con los beneficios
 
 
+    

@@ -6,7 +6,7 @@ from bot_engine.bot import process_request
 from django.db.models import F
 from django.utils.dateparse import parse_date 
 from django.shortcuts import render, redirect, get_object_or_404
-
+from .models import Nomina
 
 def home(request):
     return render(request, 'home.html')
@@ -20,25 +20,6 @@ def company_info(request):
 def inicio(request):
     return render(request, 'home.html')
 
-def nominasbeneficios(request):
-    if request.method == 'POST':
-        employee_id = request.POST.get('employee_id')
-        start_date = request.POST.get('start_date')
-        end_date = request.POST.get('end_date')
-
-        nueva_nomina = Nomina(
-            empleado_id=employee_id,
-            fecha_inicio=start_date,
-            fecha_fin=end_date
-        )
-        nueva_nomina.save()
-
-        messages.success(request, 'La solicitud de nómina ha sido enviada.')
-        return redirect('nominasbeneficios')
-
-    else:
-        empleados = Employee.objects.all()
-        return render(request, 'nominasbeneficios.html', {'empleados': empleados})
 
 def politicas(request):
     return render(request, 'politicas.html')
@@ -160,3 +141,38 @@ def personal(request):
         }
         return render(request, 'personal.html', {'user': employee})
 
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Employee, Nomina
+
+def nominasbeneficios(request):
+    if request.method == 'POST':
+        empleado_id = request.POST.get('employee_id')
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+
+        if not all([empleado_id, start_date, end_date]):
+            messages.error(request, 'Todos los campos son obligatorios.')
+            return redirect('nominasbeneficios')
+
+        try:
+            employee = Employee.objects.get(employee_id=empleado_id)
+            messages.success(request, f'Empleado encontrado: {employee.nombre} {employee.apellido}')
+        except Employee.DoesNotExist:
+            messages.error(request, 'El número de empleado es incorrecto.')
+            return redirect('nominasbeneficios')
+
+        nueva_nomina = Nomina(
+            employee=employee,
+            start_date=start_date,
+            end_date=end_date,
+        )
+        nueva_nomina.save()
+
+        messages.success(request, 'La nómina ha sido enviada correctamente al correo electrónico del empleado.')
+        return redirect('nominasbeneficios')
+
+    else:
+        empleados = Employee.objects.all()
+        return render(request, 'nominasbeneficios.html', {'empleados': empleados})
