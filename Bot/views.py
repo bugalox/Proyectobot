@@ -7,6 +7,7 @@ from django.db.models import F
 from django.utils.dateparse import parse_date 
 from django.shortcuts import render, redirect, get_object_or_404
 
+
 def home(request):
     return render(request, 'home.html')
 
@@ -38,21 +39,6 @@ def nominasbeneficios(request):
     else:
         empleados = Employee.objects.all()
         return render(request, 'nominasbeneficios.html', {'empleados': empleados})
-
-def personal(request):
-    if request.method == 'POST':
-        # Procesar el formulario y guardar los datos
-        pass
-    else:
-        # Pasar un objeto vacío a la plantilla
-        employee = {
-            'nombre': '',
-            'apellido': '',
-            'email': '',
-            'departamento': '',
-            'puesto': ''
-        }
-        return render(request, 'personal.html', {'user': employee})
 
 def politicas(request):
     return render(request, 'politicas.html')
@@ -123,3 +109,54 @@ def vacaciones_view(request):
     else:
         todas_vacaciones = Vacaciones.objects.all()
         return render(request, 'vacaciones.html', {'vacaciones': todas_vacaciones})
+
+def personal(request):
+    if request.method == 'POST':
+        empleado_id = request.POST.get('employee_id')
+
+        # Verificar si el número de empleado está vacío
+        if not empleado_id:
+            messages.error(request, 'El número de empleado no puede estar vacío.')
+            return redirect('personal')
+
+        try:
+            employee = Employee.objects.get(employee_id=empleado_id)
+            messages.success(request, f'Empleado encontrado: {employee.nombre} {employee.apellido}')
+        except Employee.DoesNotExist:
+            messages.error(request, 'El número de empleado es incorrecto.')
+            return redirect('personal')
+
+        # Actualizar los datos del empleado si se proporcionaron nuevos valores
+        new_name = request.POST.get('new_name')
+        new_email = request.POST.get('new_email')
+        new_departamento = request.POST.get('new_departamento')
+        new_puesto = request.POST.get('new_puesto')
+        new_apellido = request.POST.get('new_apellido')
+
+        if new_name:
+            employee.nombre = new_name
+        if new_email:
+            employee.email = new_email
+        if new_departamento:
+            employee.departamento = new_departamento
+        if new_puesto:
+            employee.puesto = new_puesto
+        if new_apellido:
+            employee.apellido = new_apellido
+
+        employee.save()
+
+        # Pasar los datos del empleado a la plantilla
+        return render(request, 'personal.html', {'user': employee})
+
+    else:
+        # Pasar un objeto vacío a la plantilla
+        employee = {
+            'nombre': '',
+            'apellido': '',
+            'email': '',
+            'departamento': '',
+            'puesto': ''
+        }
+        return render(request, 'personal.html', {'user': employee})
+

@@ -24,14 +24,32 @@
             background-color: white;
             padding: 20px;
             margin: 20px auto;
-            max-width: 400px;
+            max-width: 800px;
             border-radius: 5px;
             border: 1px solid #ddd;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-column-gap: 20px;
+        }
+        .left-column {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .right-column {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        label {
+            margin-bottom: 5px;
         }
         input[type="text"],
         input[type="email"],
         button {
-            width: 100%;
+            width: calc(100% - 20px);
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 5px;
@@ -59,23 +77,9 @@
             padding: 10px;
             margin: 0 5px;
         }
-
         .container {
             margin: 20px auto;
             width: 80%;
-        }
-
-        form {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        input[type="text"] {
-            width: 60%;
-            padding: 10px;
-            margin-right: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
         }
         footer {
             background-color: #333;
@@ -104,23 +108,31 @@
     </nav>
     <form method="post">
         {% csrf_token %}
-        <input type="hidden" name="employee_id" value="{{ user.id }}">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" value="{{ user.nombre }}"><br><br>
-        <label for="apellido">Apellido:</label>
-        <input type="text" id="apellido" name="apellido" value="{{ user.apellido }}"><br><br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="{{ user.email }}"><br><br>
-        <label for="departamento">Departamento:</label>
-        <input type="text" id="departamento" name="departamento" value="{{ user.departamento }}"><br><br>
-        <label for="puesto">Puesto:</label>
-        <input type="text" id="puesto" name="puesto" value="{{ user.puesto }}"><br><br>
-        <label for="new_name">Nuevo nombre:</label>
-        <input type="text" id="new_name" name="new_name" placeholder="Nuevo nombre"><br><br>
-        <label for="new_address">Nueva dirección:</label>
-        <input type="text" id="new_address" name="new_address" placeholder="Nueva dirección"><br><br>
+        <div class="left-column">
+            <label for="employee_id">ID de Empleado:</label>
+            <input type="text" id="employee_id" name="employee_id" placeholder="Ingrese ID de Empleado"><br><br>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" value="{{ user.nombre }}"><br><br>
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" value="{{ user.apellido }}"><br><br>
+            <label for="departamento">Departamento:</label>
+            <input type="text" id="departamento" name="departamento" value="{{ user.departamento }}"><br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ user.email }}"><br><br>
+        </div>
+        <div class="right-column">
+            <label for="new_name">Nuevo nombre:</label>
+            <input type="text" id="new_name" name="new_name" placeholder="Nuevo nombre"><br><br>
+            <label for="new_apellido">Nuevo apellido:</label>
+            <input type="text" id="new_apellido" name="new_apellido" placeholder="Nuevo apellido"><br><br>
+            <label for="new_departamento">Nuevo Departamento:</label>
+            <input type="text" id="new_departamento" name="new_departamento" placeholder="Nuevo departamento"><br><br>
+            <label for="new_puesto">Nuevo puesto:</label>
+            <input type="text" id="new_puesto" name="new_puesto" placeholder="Nuevo puesto"><br><br>
+            <label for="new_email">Nuevo email:</label>
+            <input type="email" id="new_email" name="new_email" placeholder="Nuevo email"><br><br>
+        </div>
         <button type="submit">Enviar solicitud</button>
     </form>
 </body>
 </html>
-
