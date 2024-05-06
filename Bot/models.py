@@ -1,5 +1,43 @@
 from django.db import models
-import datetime 
+from datetime import datetime
+from .observer import Subject
+
+# Clase base PolicyDecorator
+class PolicyDecorator:
+    def __init__(self, policy):
+        self._policy = policy
+
+    def get_info(self):
+        return self._policy.get_info()
+
+class HtmlPolicyDecorator(PolicyDecorator):
+    def get_info(self):
+        return f'<html><body>{super().get_info()}</body></html>'
+
+class HeaderPolicyDecorator(PolicyDecorator):
+    def get_info(self):
+        return f'POLÍTICA: {super().get_info()}'
+
+class FooterPolicyDecorator(PolicyDecorator):
+    def get_info(self):
+        return f'{super().get_info()}<br><br>Este es el pie de página.'
+
+class TimestampPolicyDecorator(PolicyDecorator):
+    def get_info(self):
+        return f'{super().get_info()}<br><br>Última actualización: {datetime.now()}'
+
+class Policy(Subject, models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    last_updated = models.DateTimeField(default=datetime.now)
+
+    def update_policy(self, new_content):
+        self.content = new_content
+        self.last_updated = datetime.now()
+        self.notify(content=new_content, last_updated=self.last_updated)
+
+    class Meta:
+        app_label = 'Bot'
 
 class Employee(models.Model):
     employee_id = models.CharField(max_length=100, default='')
@@ -9,19 +47,16 @@ class Employee(models.Model):
     departamento = models.CharField(max_length=100, default='Doe')
     puesto = models.CharField(max_length=100, default='Doe')
     dias_de_vacaciones_disponibles = models.IntegerField(default=0)
-    # Agrega más campos según necesites
-    # Otros campos como dirección, teléfono, etc.
+    policies_subscribed = models.ManyToManyField(Policy, related_name='subscribers', blank=True)
 
     class Meta:
         app_label = 'Bot'
 
-
-
 class Vacaciones(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     dias_de_vacaciones = models.CharField(max_length=100, default='')
-    fecha_inicio = models.DateField(default=datetime.date.today)
-    fecha_fin = models.DateField(default=datetime.date.today)
+    fecha_inicio = models.DateField(default=datetime.now)
+    fecha_fin = models.DateField(default=datetime.now)
     motivo = models.TextField()
     aprobada = models.BooleanField(default=False)
     # Agrega más campos según necesites
@@ -29,23 +64,12 @@ class Vacaciones(models.Model):
     class Meta:
         app_label = 'Bot'
 
-class Policy(models.Model):
-    # Modelo para almacenar políticas de la empresa
-    title = models.CharField(max_length=255)
-    content = models.TextField()
-
-    class Meta:
-        app_label = 'Bot'
-
-# Otros modelos que puedas necesitar para integrar con sistemas existentes
-
-
 class Nomina(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    start_date = models.DateField(default=datetime.date.today)
-    end_date = models.DateField(default=datetime.date.today)
+    start_date = models.DateField(default=datetime.now)
+    end_date = models.DateField(default=datetime.now)
     salario = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    fecha_pago =  fecha_pago = models.DateField(null=True)
+    fecha_pago = models.DateField(null=True)
     salario_base = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     bonificaciones = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     deducciones = models.DecimalField(max_digits=10, decimal_places=2, default=0)
@@ -55,6 +79,9 @@ class Nomina(models.Model):
     pension = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     otros_descuentos = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     salario_neto = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    class Meta:
+        app_label = 'Bot'
 
 class Beneficio(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
